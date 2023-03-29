@@ -3,7 +3,8 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Basket {
+public class Basket implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String products[];
     private int prices[];
 
@@ -65,6 +66,30 @@ public class Basket {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void saveBin(File file) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+            objectOutputStream.writeObject(this);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static Basket loadFromBinFile(File file) {
+        Basket basket = null;
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+            basket = (Basket) objectInputStream.readObject();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return basket;
     }
 
     static Basket loadFromTxtFile(File textFile) {
