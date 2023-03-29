@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# файлы идеи
+*.iml
+.idea
+
+# папки для автогенерируемых результатов сборки
+/out/
+/target/
