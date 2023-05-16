@@ -2,7 +2,8 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-    static File myFile = new File("basket.txt");
+    //static File myFile = new File("basket.txt");
+    static File myFile = new File("basket.json");
 
     public static void main(String[] args) {
 
@@ -20,12 +21,13 @@ public class Main {
 
         Basket basket = null;
         if (myFile.exists()) {
-            basket = Basket.loadFromTxtFile(myFile);
+            //basket = Basket.loadFromTxtFile(myFile);
+            basket = Basket.loadFromJSONFile(myFile);
         } else {
             basket = new Basket(products, prices);
         }
 
-
+        ClientLog log = new ClientLog();
         while (true) {
             int productNumber = 0;
             int productCount = 0;
@@ -34,6 +36,7 @@ public class Main {
             String input = scanner.nextLine();
 
             if (input.equals("end")) {
+                log.exportAsCSV(new File("log.csv"));
                 break;
             }
 
@@ -47,11 +50,13 @@ public class Main {
             }
 
             basket.addToCart(productNumber, productCount);
-            basket.saveTxt(myFile);
+            log.log(productNumber, productCount);
+            //basket.saveTxt(myFile);
+            basket.saveJSON(myFile);
         }
 
 
         basket.printCart();
     }
-
+   
 }
