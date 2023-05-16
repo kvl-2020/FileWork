@@ -10,5 +10,7 @@
 /out/
 /target/
 
-basket.bin
-basket.txt
+*.bin
+*.txt
+*.json
+*.csv
